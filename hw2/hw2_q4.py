@@ -3,11 +3,11 @@ import numpy as np
 import csv
 
 # initialize matrix with empty values
-t = [] # colum for time
-data1 = [] # column with data1
+t = [] 
+data1 = [] 
 
 # open csv file
-name = 'sigD.csv' # choose your file among sigA, sigB, sigC, and sigD
+name = 'sigA.csv' # choose your file among sigA, sigB, sigC, and sigD
 
 with open(name) as f:
     # open the csv file
@@ -18,12 +18,16 @@ with open(name) as f:
         data1.append(float(row[1])) # second column
         # data2.append(float(row[2])) # third column
 
+
+
+
+
 # Here we do FFT
 Fs = len(data1)/t[len(t)-1]
 Ts = 1.0/Fs; # sampling interval
 ts = t # time vector
 y = data1 # the data to make the fft from
-n = len(y) # length of the signal
+n = len(y)
 k = np.arange(n)
 T = n/Fs
 frq = k/T # two sides frequency range
