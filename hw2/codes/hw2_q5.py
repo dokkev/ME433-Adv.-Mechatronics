@@ -24,28 +24,6 @@ with open(name) as f:
         data1.append(float(row[1])) # second column
         # data2.append(float(row[2])) # third column
 
-# window_size = 10
-# numbers = data1
-# numbers_series = pd.Series(numbers)
-# windows = numbers_series.rolling(window_size)
-# moving_averages = windows.mean()
-
-# moving_averages_list = moving_averages.tolist()
-# without_nans = moving_averages_list[window_size - 1:]
-
-# filtered_data  = [0,0,0,0,0,0,0,0,0]
-# filtered_data.extend(without_nans)
-
-
-def moving_avg(x, period):
-    smoothing = 2.0 / (period + 1.0)                
-    current = numpy.array(x) # take the current value as a numpy array
-
-    previous = numpy.roll(x,1) # create a new array with all the values shifted forward
-    previous[0] = x[0] # start with this exact value
-    # roll will have moved the end into the beginning not what we want
-
-    return previous + smoothing * (current - previous)
 
 
 def running_mean(l, N): 
@@ -62,8 +40,8 @@ def running_mean(l, N):
  
     return result
 
-
-filtered_data = running_mean(data1,500)
+X = 500
+filtered_data = running_mean(data1,X)
 
 # Here we do FFT
 def fft(data,t):
@@ -88,9 +66,18 @@ frq = frq[range(int(n/2))] # one side frequency range
 
 raw_Y = fft(data1,t)
 filtered_Y = fft(filtered_data,t)
-plt.loglog(frq,abs(filtered_Y),'red')
-plt.loglog(frq,abs(raw_Y),'black')
-plt.xlabel('Freq (Hz)')
-plt.ylabel('|Y(freq)|')
-plt.title('Moving Average Filter with X = 500')
+
+
+title = " Moving Average with "  "X = " + str(X)+ "  " + name
+
+fig, (ax1, ax2) = plt.subplots(2, 1)
+ax1.plot(t,data1,'black')
+ax1.plot(t,filtered_data,'red')
+ax1.set_xlabel('Time')
+ax1.set_ylabel('Amplitude')
+ax1.title.set_text(title)
+ax2.loglog(frq,abs(raw_Y),'black')
+ax2.loglog(frq,abs(filtered_Y),'red')
+ax2.set_xlabel('Freq (Hz)')
+ax2.set_ylabel('|Y(freq)|')
 plt.show()
