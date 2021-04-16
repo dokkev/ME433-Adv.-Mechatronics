@@ -52,28 +52,27 @@ int main() {
     DDPCONbits.JTAGEN = 0;
 
     // do your TRIS and LAT commands here
-    TRISBbits.TRISB4 = 1; //initialize B4 as an input
-    TRISAbits.TRISA4 = 0; //initialize A4 as an output
-    LATAbits.LATA4 = 0; //initialize A4 as low
+    TRISBbits.TRISB4 = 1; // input
+    TRISAbits.TRISA4 = 0; // output
+    LATAbits.LATA4 = 0; // low
 
     __builtin_enable_interrupts();
 
-
+    int i; 
     while (1) {
         // use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
         // remember the core timer runs at half the sysclk
 
-        if (PORTBbits.RB4 == 0) { //B4 is low when button is pushed 
-               _CP0_SET_COUNT(0);//set the count to zero
-               int i; //declare for loop variable
-               for (i=0;i<4;i++){ //loop 4 times (on,off,on,off)
-                   while (_CP0_GET_COUNT() < 12e6) { //CP0 = sysclk/2=48MHz/2=24MHz
-                       ; //delay               //.5s * 24MHz = 12e6 cycles 
-                   } //end of while loop
-                   _CP0_SET_COUNT(0); //reset the count to zero each time
-                   LATAbits.LATA4 = !LATAbits.LATA4; //invert A4
-               } //end of for loop   
-        }//end of outer if statement
+        if (PORTBbits.RB4 == 0) { 
+               _CP0_SET_COUNT(0);
+               for (i=0;i<4;i++){ //for loop for on,off,on,off
+                   while (_CP0_GET_COUNT() < 12e6) { 
+                       ;
+                   } 
+                   _CP0_SET_COUNT(0); /
+                   LATAbits.LATA4 = !LATAbits.LATA4; 
+               } 
+        }
     }
 
 }
