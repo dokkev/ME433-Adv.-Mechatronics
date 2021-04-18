@@ -69,7 +69,7 @@ int main() {
                    while (_CP0_GET_COUNT() < 12e6) { 
                        ;
                    } 
-                   _CP0_SET_COUNT(0); /
+                   _CP0_SET_COUNT(0); 
                    LATAbits.LATA4 = !LATAbits.LATA4; 
                } 
         }
