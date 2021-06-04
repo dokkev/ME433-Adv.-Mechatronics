@@ -33,8 +33,8 @@
 #pragma config PMDL1WAY = ON // allow multiple reconfigurations
 #pragma config IOL1WAY = ON // allow multiple reconfigurations
 
-void ReadUART1(char * string, int maxLength);
-void WriteUART1(const char * string);
+void readUART1(char * string, int maxLength);
+void writeUART1(const char * string);
 
 int main() {
 
@@ -100,7 +100,8 @@ int main() {
                    LATAbits.LATA4 = !LATAbits.LATA4; 
                } 
                sprintf(m,"Hello!");
-               WriteUART1(m);
+               writeUART1(m);
+               // screen /dev/ttyUSB0 115200
         }
         
     }
@@ -111,7 +112,7 @@ int main() {
 // Read from UART1
 // block other functions until you get a '\r' or '\n'
 // send the pointer to your char array and the number of elements in the array
-void ReadUART1(char * message, int maxLength) {
+void readUART1(char * message, int maxLength) {
   char data = 0;
   int complete = 0, num_bytes = 0;
   // loop until you get a '\r' or '\n'
@@ -135,7 +136,7 @@ void ReadUART1(char * message, int maxLength) {
 }
 
 // Write a character array using UART1
-void WriteUART1(const char * string) {
+void writeUART1(const char * string) {
   while (*string != '\0') {
     while (U1STAbits.UTXBF) {
       ; // wait until tx buffer isn't full
