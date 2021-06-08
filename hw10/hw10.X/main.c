@@ -51,9 +51,9 @@ int main() {
     
     //initialize the hues here
     float hue1 = 0;
-    float hue2 = 90;
-    float hue3 = 180;
-    float hue4 = 270;
+    float hue2 = 180;
+    float hue3 = 270;
+    float hue4 = 300;
 
     //reset the lights before use
     LATBbits.LATB6 = 0; 
@@ -62,7 +62,7 @@ int main() {
     TMR2 = 0;
     
     int LED_num = 4; // total number of LEDs
-    float increment = 0.5;
+    float increment = 1;
     int counter = 2;
     
     while (1) {
@@ -71,15 +71,15 @@ int main() {
         wsColor c3 = HSBtoRGB(hue3,1,0.1);
         wsColor c4 = HSBtoRGB(hue4,1,0.1);
         
-       if (counter%2 == 0){
-           c1 = c4;
-           c2 = c3;
-           c3 = c2;
-           c4 = c1;
-       } 
+//       if (counter%2 == 0){ // mix up the order every other time to make it look pretty 
+//           c1 = c4;
+//           c2 = c3;
+//           c3 = c2;
+//           c4 = c1;
+//       } 
 
         
-        wsColor color[4] = {c4, c3, c2, c1}; 
+        wsColor color[4] = {c1, c2, c3, c4}; 
         
         hue1 = hue1 + increment;
         hue2 = hue2 + increment;
@@ -108,7 +108,7 @@ int main() {
         TMR2 = 0;
         counter = counter + 1;
         
-        while(TMR2 < 50000){
+        while(TMR2 < 40000){
         }  // delay
     }
     
